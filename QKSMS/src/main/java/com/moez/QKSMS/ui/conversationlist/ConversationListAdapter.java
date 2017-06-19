@@ -92,37 +92,34 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         //boolean setPrivate = sideDb.getAddresseeIsPrivate(address);
         boolean setPrivate = sideDb.getThreadIsPrivate(threadId);
         holder.tagIndicator.setVisibility(View.INVISIBLE);
+        holder.privacyIndicator.setVisibility(View.INVISIBLE);
+
         if (setPrivate) {
 
             holder.privacyIndicator.setVisibility(View.VISIBLE);
             holder.privacyIndicator.setColorFilter(ThemeManager.getColor());
-            holder.tagIndicator.setVisibility(View.INVISIBLE);
-        } else {
-            holder.privacyIndicator.setVisibility(View.INVISIBLE);
-            boolean hasTag = false;
-
-            if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_FRAUD) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_FRAUD)) {
-                holder.tagIndicator.setImageResource(R.drawable.ic_mark_fraud);
-                hasTag = true;
-            }
-            if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_SPAM) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_SPAM)) {
-                holder.tagIndicator.setImageResource(R.drawable.ic_mark_spam);
-                hasTag = true;
-            }
-
-            if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_UNKNOWN) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_UNKNOWN)) {
-                holder.tagIndicator.setImageResource(R.drawable.ic_mark_unknown);
-                hasTag = true;
-            }
-
-            if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_OK) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_OK)) {
-                holder.tagIndicator.setImageResource(R.drawable.ic_mark_check);
-                hasTag = true;
-            }
-            if (hasTag) {
-                holder.tagIndicator.setVisibility(View.VISIBLE);
-            }
         }
+
+        boolean hasTag = false;
+
+        if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_FRAUD) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_FRAUD)) {
+            holder.tagIndicator.setImageResource(R.drawable.ic_mark_fraud);
+            hasTag = true;
+        } else if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_SPAM) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_SPAM)) {
+            holder.tagIndicator.setImageResource(R.drawable.ic_mark_spam);
+            hasTag = true;
+        } else if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_UNKNOWN) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_UNKNOWN)) {
+            holder.tagIndicator.setImageResource(R.drawable.ic_mark_unknown);
+            hasTag = true;
+        } else if (tag.startsWith(SidebandDBSource.UW_MESSAGE_IS_OK) || tag.contains(SidebandDBSource.UW_MESSAGE_IS_OK)) {
+            holder.tagIndicator.setImageResource(R.drawable.ic_mark_check);
+            hasTag = true;
+        }
+
+        if (hasTag) {
+            holder.tagIndicator.setVisibility(View.VISIBLE);
+        }
+
 
         final boolean hasUnreadMessages = conversation.hasUnreadMessages();
         if (hasUnreadMessages) {
