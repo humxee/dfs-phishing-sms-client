@@ -66,6 +66,7 @@ import com.moez.QKSMS.ui.SwipeBackLayout;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
+import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
 import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
@@ -1100,18 +1101,25 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         if (sideDb == null) {
             sideDb = new SidebandDBSource(mContext);
         }
-        for (long threadId : mAdapter.getSelectedItems().keySet()) {
-            String addressee = (new ConversationLegacy(mContext, threadId)).getAddress();
-            if (sideDb.setConversationSidebandDBEntryByThreadID(threadId, MessageSidebandDBHelper.SIDEBAND_COLUMN_SMISHING_LABEL, tag) == 0) {
-                String title = getResources().getString(R.string.illegal_tag);
 
-                new QKDialog()
-                        .setContext(mContext)
-                        .setTitle(addressee)
-                        .setMessage(R.string.illegal_tag_message)
-                        .setCancelOnTouchOutside(true)
-                        .show();
-            }
+        long threadId = getThreadId();
+        String addressee = (new ConversationLegacy(mContext, threadId)).getAddress();
+        if (sideDb.setConversationSidebandDBEntryByThreadID(threadId, MessageSidebandDBHelper.SIDEBAND_COLUMN_SMISHING_LABEL, tag) == 0) {
+
+            new QKDialog()
+                    .setContext(mContext)
+                    .setTitle(addressee)
+                    .setMessage(R.string.illegal_tag_message)
+                    .setCancelOnTouchOutside(true)
+                    .show();
+        } else{
+
+            ConversationListFragment.sTagUpdateFlag = 1;
+            String markMessage = "Marked conversation as "+tag;
+            Toast.makeText(mContext, markMessage, Toast.LENGTH_SHORT).show();
+
         }
+
     }
+
 }

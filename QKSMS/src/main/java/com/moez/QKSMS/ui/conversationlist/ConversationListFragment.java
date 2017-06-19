@@ -62,6 +62,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     //@Bind(R.id.recording_text) QKTextView recording_text;
 
     private SidebandDBSource sideDb;
+    public static int sTagUpdateFlag;
+
 
     private ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -102,6 +104,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
             mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
         });
+
+        sTagUpdateFlag = 0;
     }
 
     @Override
@@ -404,6 +408,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         initLoaderManager();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(sTagUpdateFlag == 1) {
+            mAdapter.notifyDataSetChanged();
+            sTagUpdateFlag = 0;
+        }
+
+    }
 
     public void mark_conversations(String tag) {
 
