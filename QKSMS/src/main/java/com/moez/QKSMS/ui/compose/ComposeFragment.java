@@ -1,6 +1,8 @@
 package com.moez.QKSMS.ui.compose;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
+import com.google.android.mms.util_alt.SqliteWrapper;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
@@ -57,7 +60,9 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
 
     @Override
     public void onSend(String[] recipients, String body) {
-        long threadId = Utils.getOrCreateThreadId(mContext, recipients[0]);
+
+
+        long threadId = Utils.getOrCreateThreadId(mContext, recipients);
         if (threadId != 0) {
             mContext.finish();
             MessageListActivity.launch(mContext, threadId, -1, null, true);

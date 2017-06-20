@@ -286,6 +286,21 @@ public class Utils {
         return getOrCreateThreadId(context, recipients);
     }
 
+    public static long getOrCreateThreadId(Context context, String[] recipient) {
+        Set<String> recipients = new HashSet<>();
+        for(int i=0;i<recipient.length;i++)
+        {
+            recipients.add(recipient[i]);
+        }
+
+
+        return getOrCreateThreadId(context, recipients);
+    }
+
+
+
+
+
     /**
      * Gets the current thread_id or creates a new one for the given recipient
      * @param context is the context of the activity or service
