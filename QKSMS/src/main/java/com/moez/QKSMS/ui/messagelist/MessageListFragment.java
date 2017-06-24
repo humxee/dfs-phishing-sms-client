@@ -475,7 +475,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                 makeCall();
                 return true;
 
-            case R.id.menu_uw_convo_private:
+            case R.id.menu_uw_convo_private_text:
                 boolean conversationPrivate = !mConversationPrefs.getUWConversationPrivateEnabled();
                 mConversationPrefs.putBoolean(SettingsFragment.UW_CONVO_PRIVATE, conversationPrivate);
                 SidebandDBSource db = new SidebandDBSource(mContext);
@@ -672,9 +672,9 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        menu.findItem(R.id.menu_uw_convo_private).setTitle(mConversationPrefs.getUWConversationPrivateEnabled() ?
+        menu.findItem(R.id.menu_uw_convo_private_text).setTitle(mConversationPrefs.getUWConversationPrivateEnabled() ?
                  R.string.menu_uw_convo_private_off : R.string.menu_uw_convo_private);
-        menu.findItem(R.id.menu_uw_convo_private).setIcon(mConversationPrefs.getUWConversationPrivateEnabled() ?
+        menu.findItem(R.id.menu_uw_convo_private_text).setIcon(mConversationPrefs.getUWConversationPrivateEnabled() ?
                 R.drawable.ic_visibility_off : R.drawable.ic_visibility);
 
         menu.findItem(R.id.menu_notifications).setTitle(mConversationPrefs.getNotificationsEnabled() ?
